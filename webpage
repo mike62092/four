@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FOUR/title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --c1: #FF3B00; --c2: #FFD100; --c3: #0033FF; --c4: #111111; --c5: #F5F0E8;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-title: 'Black Han Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--c4); color: var(--c5); font-family: var(--font-body); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(17,17,17,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,59,0,0.3);
+  }
+  .nav-logo { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.1em; color: var(--c1); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--c5); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--c2); }
+
+  /* HERO */
+  #home {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: var(--c4);
+  }
+  .hero-stripe {
+    position: absolute; top: 0; right: 0; width: 45%; height: 100%;
+    background: var(--c3);
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  .hero-stripe-2 {
+    position: absolute; top: 20%; right: 20%; width: 28%; height: 60%;
+    background: var(--c1);
+    clip-path: polygon(20% 0, 100% 0, 80% 100%, 0% 100%);
+    opacity: 0.85;
+  }
+  .hero-dot {
+    position: absolute; bottom: 10%; left: 35%; width: 180px; height: 180px;
+    border-radius: 50%; background: var(--c2); opacity: 0.18;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-tag { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--c2); margin-bottom: 1rem; }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 14vw, 11rem);
+    line-height: 0.92;
+    color: var(--c5);
+    letter-spacing: 0.02em;
+  }
+  .hero-name span { color: var(--c1); }
+  .hero-sub {
+    margin-top: 1.5rem; font-size: 1rem; font-weight: 300;
+    letter-spacing: 0.05em; color: rgba(245,240,232,0.6);
+    max-width: 400px;
+  }
+  .hero-cta { display: flex; gap: 1rem; margin-top: 2.5rem; }
+  .btn-primary {
+    background: var(--c1); color: #fff; border: none;
+    padding: 0.85rem 2.2rem; font-family: var(--font-body);
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #d42e00; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--c5);
+    border: 1px solid rgba(245,240,232,0.4);
+    padding: 0.85rem 2.2rem; font-family: var(--font-body);
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; text-decoration: none;
+    display: inline-block; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--c2); color: var(--c2); }
+
+  section { padding: 6rem 2.5rem; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--c1); margin-bottom: 1rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; margin-bottom: 2rem; }
+
+  /* ABOUT */
+  #about { background: var(--c5); color: var(--c4); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-img {
+    aspect-ratio: 3/4; background: var(--c3);
+    position: relative; overflow: hidden;
+  }
+  .about-img-inner {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.07) 10px, rgba(0,0,0,0.07) 11px);
+  }
+  .about-img-label {
+    position: absolute; bottom: 1.5rem; left: 1.5rem;
+    font-family: var(--font-display); font-size: 1.2rem; color: #fff;
+    letter-spacing: 0.05em;
+  }
+  .about-text p { font-size: 1.05rem; line-height: 1.8; color: #333; margin-bottom: 1.2rem; }
+  .members { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .member-tag {
+    padding: 0.4rem 1rem; border: 1px solid var(--c4);
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* SHOWS */
+  #shows { background: var(--c4); }
+  .shows-list { display: flex; flex-direction: column; gap: 0; }
+  .show-item {
+    display: grid; grid-template-columns: 100px 1fr auto;
+    align-items: center; gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(245,240,232,0.1);
+    transition: background 0.2s;
+  }
+  .show-item:hover { background: rgba(255,59,0,0.05); }
+  .show-date { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--c1); }
+  .show-date span { display: block; font-family: var(--font-body); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .show-info h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.25rem; }
+  .show-info p { font-size: 0.8rem; color: rgba(245,240,232,0.5); letter-spacing: 0.05em; }
+  .show-sold { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c2); }
+
+  /* MUSIC */
+  #music { background: var(--c3); color: #fff; }
+  .music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .album-card { position: relative; cursor: pointer; }
+  .album-art {
+    aspect-ratio: 1; margin-bottom: 0.75rem;
+    position: relative; overflow: hidden;
+  }
+  .album-art-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.3s;
+  }
+  .album-card:hover .album-art-bg { transform: scale(1.04); }
+  .album-play {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s;
+    background: rgba(0,0,0,0.4);
+  }
+  .album-card:hover .album-play { opacity: 1; }
+  .play-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: #fff; display: flex; align-items: center; justify-content: center;
+  }
+  .play-tri { width: 0; height: 0; border-top: 9px solid transparent; border-bottom: 9px solid transparent; border-left: 15px solid var(--c4); margin-left: 3px; }
+  .album-name { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.2rem; }
+  .album-year { font-size: 0.75rem; opacity: 0.6; }
+
+  /* CONTACT */
+  #contact { background: var(--c2); color: var(--c4); }
+  #contact .section-label { color: var(--c4); opacity: 0.5; }
+  #contact .section-title { color: var(--c4); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-info p { font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
+  .contact-link { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c4); text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
+  .contact-link:hover { opacity: 0.6; }
+  .contact-link::before { content: ''; display: block; width: 20px; height: 1px; background: var(--c4); }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .form-field input, .form-field textarea {
+    background: rgba(17,17,17,0.08); border: 1px solid rgba(17,17,17,0.2);
+    padding: 0.85rem 1rem; font-family: var(--font-body); font-size: 0.95rem; color: var(--c4);
+    outline: none; transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-field input:focus, .form-field textarea:focus { border-color: var(--c4); }
+  .form-field textarea { height: 120px; resize: vertical; }
+  .btn-dark {
+    background: var(--c4); color: var(--c5); border: none;
+    padding: 0.9rem 2.5rem; font-family: var(--font-body);
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer; align-self: flex-start;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-dark:hover { opacity: 0.8; transform: translateY(-2px); }
+
+  footer { background: #000; padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: var(--font-display); font-size: 1.4rem; color: var(--c1); letter-spacing: 0.1em; }
+  .footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
+
+  @media (max-width: 640px) {
+    .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .show-item { grid-template-columns: 80px 1fr; }
+    .show-item .btn-outline { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">THE BAND</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg">
+    <div class="hero-stripe"></div>
+    <div class="hero-stripe-2"></div>
+    <div class="hero-dot"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-tag">Est. 2019 · Boston, MA</p>
+    <h1 class="hero-name">THE<br><span>BAND</span></h1>
+    <p class="hero-sub">Genre-defying sound from Boston's underground. Loud, raw, unforgettable.</p>
+    <div class="hero-cta">
+      <a href="#shows" class="btn-primary">See Tour Dates</a>
+      <a href="#music" class="btn-outline">Listen Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img">
+      <div class="about-img-inner"></div>
+      <div class="about-img-label">Band Photo</div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Four friends. One sound.</h2>
+      <p>We started in a basement in 2019 with nothing but three chords and too much ambition. Since then we've played 200+ shows across the Northeast, released two EPs, and somehow still all like each other.</p>
+      <p>Our music pulls from everything — rock, soul, noise, silence. We don't fit neatly into one box, and we're fine with that.</p>
+      <div class="members">
+        <span class="member-tag">Alex — Vocals</span>
+        <span class="member-tag">Jordan — Guitar</span>
+        <span class="member-tag">Sam — Bass</span>
+        <span class="member-tag">Riley — Drums</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWS -->
+<section id="shows">
+  <p class="section-label">On the Road</p>
+  <h2 class="section-title">Tour Dates</h2>
+  <div class="shows-list">
+    <div class="show-item">
+      <div class="show-date">MAY<span>10</span></div>
+      <div class="show-info"><h3>The Sinclair</h3><p>Cambridge, MA</p></div>
+      <a href="#contact" class="btn-outline">Tickets</a>
+    </div>
+    <div class="show-item">
+      <div class="show-date">MAY<span>17</span></div>
+      <div class="show-info"><h3>Brighton Music Hall</h3><p>Boston, MA</p></div>
+      <a href="#contact" class="btn-outline">Tickets</a>
+    </div>
+    <div class="show-item">
+      <div class="show-date">JUN<span>03</span></div>
+      <div class="show-info"><h3>Brooklyn Steel</h3><p>New York, NY</p></div>
+      <a href="#contact" class="btn-outline">Tickets</a>
+    </div>
+    <div class="show-item">
+      <div class="show-date">JUN<span>21</span></div>
+      <div class="show-info"><h3>Union Transfer</h3><p>Philadelphia, PA</p></div>
+      <span class="show-sold">Sold Out</span>
+    </div>
+    <div class="show-item">
+      <div class="show-date">JUL<span>04</span></div>
+      <div class="show-info"><h3>Cat's Cradle</h3><p>Carrboro, NC</p></div>
+      <a href="#contact" class="btn-outline">Tickets</a>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music">
+  <p class="section-label" style="color:rgba(255,255,255,0.5);">Discography</p>
+  <h2 class="section-title">Music</h2>
+  <div class="music-grid">
+    <div class="album-card">
+      <div class="album-art">
+        <div class="album-art-bg" style="background: linear-gradient(135deg, #FF3B00 0%, #FFD100 100%);"></div>
+        <div class="album-play"><div class="play-btn"><div class="play-tri"></div></div></div>
+      </div>
+      <p class="album-name">Signal & Noise</p>
+      <p class="album-year">2024 · EP</p>
+    </div>
+    <div class="album-card">
+      <div class="album-art">
+        <div class="album-art-bg" style="background: linear-gradient(135deg, #111 0%, #0033FF 100%);"></div>
+        <div class="album-play"><div class="play-btn"><div class="play-tri"></div></div></div>
+      </div>
+      <p class="album-name">Basement Tapes</p>
+      <p class="album-year">2022 · EP</p>
+    </div>
+    <div class="album-card">
+      <div class="album-art">
+        <div class="album-art-bg" style="background: linear-gradient(135deg, #0033FF 0%, #FF3B00 100%);"></div>
+        <div class="album-play"><div class="play-btn"><div class="play-tri"></div></div></div>
+      </div>
+      <p class="album-name">Live at The Sinclair</p>
+      <p class="album-year">2023 · Live</p>
+    </div>
+    <div class="album-card">
+      <div class="album-art">
+        <div class="album-art-bg" style="background: linear-gradient(135deg, #FFD100 0%, #111 100%);"></div>
+        <div class="album-play"><div class="play-btn"><div class="play-tri"></div></div></div>
+      </div>
+      <p class="album-name">Singles</p>
+      <p class="album-year">2019–Present</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Booking & Press</h2>
+      <p>Want to book us for your venue, festival, or event? Have a press or interview request? Drop us a message — we read everything.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="#">Instagram</a>
+        <a class="contact-link" href="#">Spotify</a>
+        <a class="contact-link" href="#">Bandcamp</a>
+        <a class="contact-link" href="#">YouTube</a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-field">
+        <label>Your Name</label>
+        <input type="text" placeholder="Jane Smith" />
+      </div>
+      <div class="form-field">
+        <label>Email</label>
+        <input type="email" placeholder="jane@example.com" />
+      </div>
+      <div class="form-field">
+        <label>Message</label>
+        <textarea placeholder="Tell us about the show, event, or opportunity..."></textarea>
+      </div>
+      <button class="btn-dark">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">THE BAND</div>
+  <p class="footer-copy">© 2025 The Band. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
